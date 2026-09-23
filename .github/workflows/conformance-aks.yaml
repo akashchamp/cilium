@@ -340,6 +340,7 @@ jobs:
         uses: ./.github/actions/setup-aks-cluster
         with:
           cluster_name: ${{ env.name }}
+          timeout_minutes: ${{ env.create_timeout_minutes }}
           location: ${{ matrix.location }}
           version: ${{ matrix.version }}
           pod_cidrs: ${{ env.ipv4_pod_cidr }},${{ env.ipv6_pod_cidr }}
