@@ -105,6 +105,7 @@ concurrency:
 env:
   name: ${{ github.repository_owner }}-${{ github.event.repository.name }}-${{ github.run_id }}-${{ inputs.UID }}-${{ github.run_attempt }}
   cost_reduction: --node-vm-size Standard_B2s --node-osdisk-size 64
+  create_timeout_minutes: 35
   ipv4_pod_cidr: 192.168.0.0/16
   ipv6_pod_cidr: fd00::/104
   test_concurrency: 5
@@ -335,7 +336,7 @@ jobs:
           creds: ${{ secrets.AZURE_PR_SP_CREDS }}
 
       - name: Create AKS cluster
-        timeout-minutes: 20
+        timeout-minutes: ${{ fromJSON(env.create_timeout_minutes) }}
         uses: ./.github/actions/setup-aks-cluster
         with:
           cluster_name: ${{ env.name }}
